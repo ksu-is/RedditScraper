@@ -1,4 +1,4 @@
-#Road Map and Checklist
+# Road Map and Checklist
 
 4/13/20: Established repsository and begin reading up on using the reddit API and other existing scrapers.
 API Guide --> https://www.storybench.org/how-to-scrape-reddit-with-python/
