@@ -8,7 +8,7 @@ reddit = praw.Reddit("credentials")
 
 class SubredditScraper:
     
-    def __init__(self, sub, sort='new', lim=100, mode='w'):
+    def __init__(self, sub, sort='hot', lim=100, mode='w'):
         self.sub = sub
         self.sort = sort
         self.lim = lim
