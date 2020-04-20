@@ -2,7 +2,7 @@ import praw
 import pandas as pd
 import datetime as dt
 
-reddit = praw.Reddit(client_id='_UBXPrV2xeWkYA', client_secret="4_J-ZgabJqwjwKvAM9fiQRjqkQ8", password='Dutifeh37', user_agent='Reddit Scraper', username='Vexpix')
+reddit = praw.Reddit("credentials")
 
 subreddit = reddit.subreddit('Pics')
 
@@ -26,8 +26,8 @@ topics_data
 def get_date(created):
     return dt.datetime.fromtimestamp(created)
 
-new_timestamp = topics_data["created"].apply(get_date)
+_timestamp = topics_data["created"].apply(get_date)
 
-topics_data = topics_data.assign(timestamp = new_timestamp)
+topics_data = topics_data.assign(timestamp = _timestamp)
 
 topics_data.to_csv('RedditScraped.csv', index=False)
