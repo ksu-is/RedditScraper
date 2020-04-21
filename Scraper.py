@@ -45,12 +45,14 @@ class SubredditScraper:
         name = os.path.basename(link)
         if name == "":
             pass
+        elif name.isalnum() == False:
+            pass
         else:
-            print("Name is",name)
+            print('Name is ',name)
             filename = os.path.join(image_dir, name)
-            print("File name is",filename)
-        if not os.path.isfile(filename):
-            urllib.request.urlretrieve(link, filename)
+            print('Filename is ',filename)
+            if not os.path.isfile(filename):
+                urllib.request.urlretrieve(link, filename)
 
         
     def get_posts(self):
