@@ -18,8 +18,10 @@ PRAW --> https://praw.readthedocs.io/en/latest/index.html
 - [X] Establish File Download System for Images
 - [X] Build simple GUI
 - [X] GUI Inputs
-- [ ] Inputs Errors
-- [ ] GUI progress update messages
+- [X] Inputs Errors
+- [X] GUI progress update messages
+- [ ] Better Image Scraper
+- [ ] Redesign the look of the GUI
 - [ ] Test code for issues (formally)
 - [ ] Address any Issues and Begin Finalizing Code
 - [ ] Finalize Code
