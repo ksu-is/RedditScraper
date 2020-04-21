@@ -32,7 +32,15 @@ class SubredditScraper:
     
     def get_image(self,link):
         image_dir = 'reddit_images/'
-        os.makedirs(os.path.dirname(image_dir), exist_ok=True)
+        path = os.getcwd() + "/" + image_dir
+        if os.path.isdir(image_dir):
+            pass
+        else:
+            try:
+                os.makedirs(os.path.dirname(image_dir), exist_ok=True)
+                print("Directory '%s' created successfully" % directory)
+            except OSError as error:
+                print("Directory '%s' can not be created")
         name = os.path.basename(link)
         filename = os.path.join(image_dir, name)
         if not os.path.isfile(filename):
@@ -69,15 +77,15 @@ class SubredditScraper:
         
         new_df = pd.DataFrame(sub_dict)
 
-        if 'Dataframe' in str(type(df)) and self.mode == 'w':
+        if 'Dataframe' in str(type(df)) and self.mode == 'w+':
             pd.concat([df, new_df], axis=0, sort=0).tto_csv(csv, index=False)
             print(
                 f'{len(new_df)} new posts were collected and saved to {csv}')
-        elif self.mode == 'w':
+        elif self.mode == 'w+':
             new_df.to_csv(csv, index=False)
             print(f'{len(new_df)} posts collected and saved to {csv}')
         else:
             print(f'{len(new_df)} posts were collected but they were not added to {csv} because mode was set to "{self.mode}')
 
 if __name__ == '__main__':
-    SubredditScraper('pics',lim=100,mode='w',sort='top').get_posts()
+    SubredditScraper('pics',lim=100,mode='w+',sort='top').get_posts()
