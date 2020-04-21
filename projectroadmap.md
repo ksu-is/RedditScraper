@@ -14,9 +14,12 @@ PRAW --> https://praw.readthedocs.io/en/latest/index.html
 - [X] Get the Redit API working to scrape for submission data
 - [X] Establish Sorting System
 - [X] Export to CSV
-- [ ] Allow for inputs (subreddits, sorting method, credentials, etc.)
-- [ ] Establish File Download System for Images
-- [ ] Build simple GUI
+- [X] Allow for inputs (subreddits, sorting method, credentials, etc.)
+- [X] Establish File Download System for Images
+- [X] Build simple GUI
+- [X] GUI Inputs
+- [ ] Inputs Errors
+- [ ] GUI progress update messages
 - [ ] Test code for issues (formally)
 - [ ] Address any Issues and Begin Finalizing Code
 - [ ] Finalize Code
