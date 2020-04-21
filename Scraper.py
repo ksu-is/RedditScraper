@@ -93,9 +93,9 @@ class SubredditScraper:
                 sub_dict['score'].append(post.score)
                 sub_dict['created'].append(dt.datetime.fromtimestamp(post.created))
                 sub_dict['url'].append(post.url)
-                self.get_image(post.url)
             sleep(0.1)
-        
+            self.get_image(post.url)
+
         #Putting into pandas to export post data to csv
         new_df = pd.DataFrame(sub_dict)
         if 'Dataframe' in str(type(df)) and self.mode == 'w+':
