@@ -43,7 +43,12 @@ class SubredditScraper:
             except OSError as error:
                 print("Directory '%s' can not be created")
         name = os.path.basename(link)
-        filename = os.path.join(image_dir, name)
+        if name == "":
+            pass
+        else:
+            print("Name is",name)
+            filename = os.path.join(image_dir, name)
+            print("File name is",filename)
         if not os.path.isfile(filename):
             urllib.request.urlretrieve(link, filename)
 
