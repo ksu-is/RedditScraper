@@ -5,6 +5,7 @@ import pandas as pd
 from time import sleep
 import datetime as dt
 import urllib.request
+from tkinter import *
 
 reddit = praw.Reddit("credentials")
 
@@ -95,5 +96,36 @@ class SubredditScraper:
         else:
             print(f'{len(new_df)} posts were collected but they were not added to {csv} because mode was set to "{self.mode}')
 
+class UserInterface(Frame):
+
+    def __init__(self, master):
+        Frame.__init__(self,master)
+        self.master = master
+        master.title('Reddit Scraper')
+        self.inputs()
+
+        self.scrape_button = Button(self, text='Initiate Scrape', command=self.scrape)
+        self.scrape_button.grid(row=2, column=1, columnspan=2, sticky='w')
+        self.grid()
+
+    def inputs(self):
+        self.sub_entry = Entry(self, width = 6, font=('Arial',12))
+        self.sub_entry.grid(row=0, column=0, columnspan=2, sticky='w')
+        self.sub_entry.focus_set()
+
+        sort_dict = {'top', 'new', 'hot'}
+        tkvar = StringVar(root)
+        tkvar.set('top')
+        self.sort_menu = OptionMenu(self, tkvar, *sort_dict)
+        self.sort_menu.grid(row=4, column=0, columnspan=2, sticky='w')
+
+
+
+    def scrape(self):
+        SubredditScraper('pics',lim=100,mode='w+',sort='top').get_posts()
+
 if __name__ == '__main__':
-    SubredditScraper('pics',lim=100,mode='w+',sort='top').get_posts()
+    root = Tk()
+    root.geometry()
+    ui = UserInterface(root)
+    root.mainloop()
