@@ -7,6 +7,7 @@ from time import sleep
 import datetime as dt
 import urllib.request
 from tkinter import *
+from PIL import Image, ImageTk
 
 #Importing credentials to use Reddit's API
 reddit = praw.Reddit("credentials")
@@ -118,26 +119,33 @@ class UserInterface(Frame):
         Frame.__init__(self,master)
         self.master = master
         master.title('Reddit Scraper')
+        master.configure(background='#121212')
+        master.attributes('-alpha',0.9)
+        self.configure(background='#121212')
         self.inputs()
 
         #Scraper button
-        self.scrape_button = Button(self, text='Initiate Scrape', command=self.scrape)
+        img = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperbutton.png")
+        img = img.subsample(1,1)
+        #img = img.subsample(5,5)
+        self.scrape_button = Button(self, text='Initiate Scrape', font=('Montserrat',9), fg='#BB86FC', command=self.scrape, image = img, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
         self.scrape_button.grid(row=3, column=1, sticky='S')
+        self.scrape_button.image = img
 
         #setting up grid
         self.grid()
         col_count, row_count = self.grid_size()
         for col in range(col_count):
-            self.grid_columnconfigure(col, minsize=0)
+            self.grid_columnconfigure(col, minsize=80, weight=1)
         for row in range(row_count):
-            self.grid_rowconfigure(row, minsize=30)
+            self.grid_rowconfigure(row, minsize=60, weight=1)
 
     #This sets up all the widgets for user input
     def inputs(self):
         #Subreddit entry
-        self.sub_entry = Entry(self, width=12, font=('Arial',10))
+        self.sub_entry = Entry(self, width=12, font=('Montserrat',10))
         self.sub_entry.grid(row=0, column=1)
-        self.sub_lbl = Label(self, text='Enter the desired Subreddit:')
+        self.sub_lbl = Label(self, text='Enter the desired Subreddit:', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
         self.sub_lbl.grid(row=0)
 
         #Sort method
@@ -146,13 +154,13 @@ class UserInterface(Frame):
         self.tkvar.set('top')
         self.sort_menu = OptionMenu(self, self.tkvar, *sort_dict)
         self.sort_menu.grid(row=1, column=1)
-        self.sort_lbl = Label(self, text='Select the sorting method: ')
+        self.sort_lbl = Label(self, text='Select the sorting method: ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
         self.sort_lbl.grid(row=1)
 
         #Post number limit
         self.lim_entry = Entry(self, width=8, font=('Arial',10))
         self.lim_entry.grid(row=2, column=1)
-        self.lim_lbl = Label(self, text='Enter the amount of posts to download (Max 1000): ')
+        self.lim_lbl = Label(self, text='Enter the amount of posts to download (Max 1000): ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
         self.lim_lbl.grid(row=2)
 
     #This calls the scraper and checks for existing subreddit and that entries are filled out
@@ -179,13 +187,13 @@ class UserInterface(Frame):
 
     #This sets up the progress updates and error messaging in the GUI
     def updates(self,message):
-        self.update_lbl = Label(self, text=message, foreground='red')
+        self.update_lbl = Label(self, text=message, font=('Montserrat',10,'bold'), bg='#121212', fg='#CF6679')
         self.update_lbl.grid(row=3, column=0, sticky='S')
         self.update()
 
 #Calling up the UI if this file is being called directly
 if __name__ == '__main__':
     root = Tk()
-    root.geometry()
+    root.geometry('500x300')
     ui = UserInterface(root)
     root.mainloop()
