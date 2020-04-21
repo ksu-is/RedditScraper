@@ -105,24 +105,38 @@ class UserInterface(Frame):
         self.inputs()
 
         self.scrape_button = Button(self, text='Initiate Scrape', command=self.scrape)
-        self.scrape_button.grid(row=2, column=1, columnspan=2, sticky='w')
+        self.scrape_button.grid(row=3, column=1, sticky='S')
         self.grid()
+        col_count, row_count = self.grid_size()
+        for col in range(col_count):
+            self.grid_columnconfigure(col, minsize=0)
+        for row in range(row_count):
+            self.grid_rowconfigure(row, minsize=30)
 
     def inputs(self):
-        self.sub_entry = Entry(self, width = 6, font=('Arial',12))
-        self.sub_entry.grid(row=0, column=0, columnspan=2, sticky='w')
-        self.sub_entry.focus_set()
+        self.sub_entry = Entry(self, width=12, font=('Arial',12))
+        self.sub_entry.grid(row=0, column=1)
+        self.sub_lbl = Label(self, text='Enter the desired Subreddit:')
+        self.sub_lbl.grid(row=0)
 
         sort_dict = {'top', 'new', 'hot'}
-        tkvar = StringVar(root)
-        tkvar.set('top')
-        self.sort_menu = OptionMenu(self, tkvar, *sort_dict)
-        self.sort_menu.grid(row=4, column=0, columnspan=2, sticky='w')
+        self.tkvar = StringVar(root)
+        self.tkvar.set('top')
+        self.sort_menu = OptionMenu(self, self.tkvar, *sort_dict)
+        self.sort_menu.grid(row=1, column=1)
+        self.sort_lbl = Label(self, text='Select the sorting method: ')
+        self.sort_lbl.grid(row=1)
 
-
+        self.lim_entry = Entry(self, width=8, font=('Arial',12))
+        self.lim_entry.grid(row=2, column=1)
+        self.lim_lbl = Label(self, text='Enter the amount of posts to download (Max 1000): ')
+        self.lim_lbl.grid(row=2)
 
     def scrape(self):
-        SubredditScraper('pics',lim=100,mode='w+',sort='top').get_posts()
+        sub_in = self.sub_entry.get()
+        sort_in = self.tkvar.get()
+        limit_in = int(self.lim_entry.get())
+        SubredditScraper(sub=sub_in,lim=limit_in,mode='w+',sort=sort_in).get_posts()
 
 if __name__ == '__main__':
     root = Tk()
