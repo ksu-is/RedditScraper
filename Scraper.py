@@ -1,7 +1,6 @@
 from os.path import isfile
 import os
 import praw
-import prawcore
 import pandas as pd
 from time import sleep
 import datetime as dt
@@ -29,7 +28,7 @@ class SubredditScraper:
             return self.sort, reddit.subreddit(self.sub).hot(limit=self.lim)
         else:
             self.sort = 'hot'
-            ui.updates('Sort method was not recognized, defaulting to hot.')
+            print('Sort method was not recognized, defaulting to hot.')
             return self.sort, reddit.subreddit(self.sub).hot(limit=self.lim)
     
     def get_image(self,link):
@@ -68,7 +67,7 @@ class SubredditScraper:
         print(f'After set_sort(), sort = {sort} and sub = {self.sub}')
         print(f'csv_loaded = {csv_loaded}')
 
-        ui.updates(f'Collecting information from r/{self.sub}.')
+        print(f'Collecting information from r/{self.sub}.')
 
         for post in subreddit:
             unique_id = post.id not in tuple(df.id) if csv_loaded else True
@@ -89,10 +88,11 @@ class SubredditScraper:
 
         if 'Dataframe' in str(type(df)) and self.mode == 'w+':
             pd.concat([df, new_df], axis=0, sort=0).tto_csv(csv, index=False)
-            ui.updates(f'{len(new_df)} new posts were collected and saved to {csv}')
+            print(
+                f'{len(new_df)} new posts were collected and saved to {csv}')
         elif self.mode == 'w+':
             new_df.to_csv(csv, index=False)
-            ui.updates(f'{len(new_df)} posts collected and saved to {csv}')
+            print(f'{len(new_df)} posts collected and saved to {csv}')
         else:
             print(f'{len(new_df)} posts were collected but they were not added to {csv} because mode was set to "{self.mode}')
 
@@ -106,7 +106,6 @@ class UserInterface(Frame):
 
         self.scrape_button = Button(self, text='Initiate Scrape', command=self.scrape)
         self.scrape_button.grid(row=3, column=1, sticky='S')
-
         self.grid()
         col_count, row_count = self.grid_size()
         for col in range(col_count):
@@ -115,7 +114,7 @@ class UserInterface(Frame):
             self.grid_rowconfigure(row, minsize=30)
 
     def inputs(self):
-        self.sub_entry = Entry(self, width=12, font=('Arial',10))
+        self.sub_entry = Entry(self, width=12, font=('Arial',12))
         self.sub_entry.grid(row=0, column=1)
         self.sub_lbl = Label(self, text='Enter the desired Subreddit:')
         self.sub_lbl.grid(row=0)
@@ -128,7 +127,7 @@ class UserInterface(Frame):
         self.sort_lbl = Label(self, text='Select the sorting method: ')
         self.sort_lbl.grid(row=1)
 
-        self.lim_entry = Entry(self, width=8, font=('Arial',10))
+        self.lim_entry = Entry(self, width=8, font=('Arial',12))
         self.lim_entry.grid(row=2, column=1)
         self.lim_lbl = Label(self, text='Enter the amount of posts to download (Max 1000): ')
         self.lim_lbl.grid(row=2)
@@ -136,28 +135,9 @@ class UserInterface(Frame):
     def scrape(self):
         sub_in = self.sub_entry.get()
         sort_in = self.tkvar.get()
-        try:
-            limit_in = int(self.lim_entry.get())
-        except ValueError:
-            self.updates('Please enter a limit.')
-        if sub_in == '':
-            self.updates('Please enter a subreddit.')
-        elif limit_in == 0:
-            self.updates('Please enter a limit.')
-        else:
-            if limit_in <= 1000:
-                try:
-                    SubredditScraper(sub=sub_in,lim=limit_in,mode='w+',sort=sort_in).get_posts()
-                except prawcore.exceptions.Redirect:
-                    self.updates(f'Please check that {sub_in} is an existing subreddit.')
-            else:
-                self.updates('Error post download limit is 1000')
+        limit_in = int(self.lim_entry.get())
+        SubredditScraper(sub=sub_in,lim=limit_in,mode='w+',sort=sort_in).get_posts()
 
-    def updates(self,message):
-        self.update_lbl = Label(self, text=message, foreground='red')
-        self.update_lbl.grid(row=3, column=0, sticky='S')
-        self.update()
-        
 if __name__ == '__main__':
     root = Tk()
     root.geometry()
