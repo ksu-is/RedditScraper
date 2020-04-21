@@ -32,12 +32,13 @@ class SubredditScraper:
     
     def get_image(self,link):
         image_dir = 'reddit_images/'
-        path = os.getcwd() + "/" + image_dir
-        if os.path.isdir(image_dir):
+        cwd = os.getcwd()
+        directory = cwd + "/" + image_dir
+        if os.path.isdir(directory):
             pass
         else:
             try:
-                os.makedirs(os.path.dirname(image_dir), exist_ok=True)
+                os.makedirs(directory,exist_ok=True)
                 print("Directory '%s' created successfully" % directory)
             except OSError as error:
                 print("Directory '%s' can not be created")
