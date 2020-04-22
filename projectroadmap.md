@@ -20,6 +20,7 @@ PRAW --> https://praw.readthedocs.io/en/latest/index.html
 - [X] GUI Inputs
 - [X] Inputs Errors
 - [X] GUI progress update messages
+- [ ] Change dropdown to combobox
 - [ ] Better Image Scraper
 - [ ] Redesign the look of the GUI
 - [ ] Test code for issues (formally)
