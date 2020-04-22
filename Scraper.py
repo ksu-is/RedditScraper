@@ -125,8 +125,13 @@ class UserInterface(Frame):
         self.configure(background='#121212')
         self.inputs()
 
+        #Setting the updates and prepping for use
+        self.message = ''
+        self.update_lbl = Label(self, text=self.message, font=('Montserrat',10,'bold'), bg='#121212', fg='#CF6679')
+        self.update_lbl.grid(row=4, column=1, sticky='S')
+
         #Scraper button
-        img = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperbutton.png")
+        img = PhotoImage(file = r"resources\scraperbutton.png")
         img = img.subsample(1,1)
         self.scrape_button = Button(self, text='Initiate Scrape', font=('Montserrat',9), fg='#BB86FC', command=self.scrape, image=img, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
         self.scrape_button.grid(row=4, column=2, sticky='S')
@@ -153,7 +158,7 @@ class UserInterface(Frame):
     #This sets up all the widgets for user input
     def inputs(self):
         #Subreddit entry
-        entryback_sub = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperentryback.png")
+        entryback_sub = PhotoImage(file = r"resources\scraperentryback.png")
         entryback_sub = entryback_sub.subsample(1,1)
         self.entryback_sub = Label(self, image=entryback_sub, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
         self.entryback_sub.grid(row=1, column=2)
@@ -167,7 +172,7 @@ class UserInterface(Frame):
         sort_dict = {'Top', 'New', 'Hot'}
         self.tkvar = StringVar(root)
         self.tkvar.set('Sort Method')
-        sort_arrow = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperdown.png")
+        sort_arrow = PhotoImage(file = r"resources\scraperdown.png")
         sort_arrow = sort_arrow.subsample(2,2)
         self.sort_menu = OptionMenu(self, self.tkvar, *sort_dict)
         self.sort_menu.configure(indicatoron=0,borderwidth=0, highlightthickness=0,font=('Monsterrat',10,'bold'), bg='#121212', activebackground='#121212', activeforeground='#BB86FC', fg='#BB86FC', image=sort_arrow, compound='right')
@@ -178,7 +183,7 @@ class UserInterface(Frame):
         self.sort_lbl.grid(row=2, column=1)
 
         #Post number limit
-        entryback_lim = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperentryback.png")
+        entryback_lim = PhotoImage(file = r"resources\scraperentryback.png")
         entryback_lim = entryback_lim.subsample(1,1)
         self.entryback_lim = Label(self, image=entryback_lim, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
         self.entryback_lim.grid(row=3, column=2)
@@ -188,7 +193,7 @@ class UserInterface(Frame):
         self.lim_lbl = Label(self, text='Download Limit (Max 1000): ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
         self.lim_lbl.grid(row=3,column=1)
 
-    #This calls the scraper and checks for existing subreddit and that entries are filled out
+    #This calls the scraper and checks for existing subreddit and t1hat entries are filled out
     def scrape(self):
         sub_in = self.sub_entry.get()
         sort_in = self.tkvar.get().lower()
@@ -214,9 +219,8 @@ class UserInterface(Frame):
 
     #This sets up the progress updates and error messaging in the GUI
     def updates(self,message):
-        self.update_lbl = Label(self, text=message, font=('Montserrat',10,'bold'), bg='#121212', fg='#CF6679')
-        self.update_lbl.grid(row=4, column=1, sticky='S')
-        self.update()
+        self.update_lbl.configure(text=message)
+        self.update_lbl.update()
 
 #Calling up the UI if this file is being called directly
 if __name__ == '__main__':
