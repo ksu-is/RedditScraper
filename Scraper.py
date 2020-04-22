@@ -123,6 +123,11 @@ class UserInterface(Frame):
         self.configure(background='#121212')
         self.inputs()
 
+        #Setting the updates and prepping for use
+        self.message = ''
+        self.update_lbl = Label(self, text=self.message, font=('Montserrat',10,'bold'), bg='#121212', fg='#CF6679')
+        self.update_lbl.grid(row=4, column=1, sticky='S')
+
         #Scraper button
         img = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperbutton.png")
         img = img.subsample(1,1)
@@ -186,7 +191,7 @@ class UserInterface(Frame):
         self.lim_lbl = Label(self, text='Download Limit (Max 1000): ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
         self.lim_lbl.grid(row=3,column=1)
 
-    #This calls the scraper and checks for existing subreddit and that entries are filled out
+    #This calls the scraper and checks for existing subreddit and t1hat entries are filled out
     def scrape(self):
         sub_in = self.sub_entry.get()
         sort_in = self.tkvar.get().lower()
@@ -212,9 +217,8 @@ class UserInterface(Frame):
 
     #This sets up the progress updates and error messaging in the GUI
     def updates(self,message):
-        self.update_lbl = Label(self, text=message, font=('Montserrat',10,'bold'), bg='#121212', fg='#CF6679')
-        self.update_lbl.grid(row=4, column=1, sticky='S')
-        self.update()
+        self.update_lbl.configure(text=message)
+        self.update_lbl.update()
 
 #Calling up the UI if this file is being called directly
 if __name__ == '__main__':
