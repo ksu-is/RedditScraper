@@ -41,6 +41,8 @@ class SubredditScraper:
     
     #This is the image downloader
     def get_image(self,link):
+        #testing the link to ensure it points to a graphic
+        print("Link is:",link)
         image_dir = 'reddit_images/'
         cwd = os.getcwd()
         directory = cwd + "/" + image_dir
