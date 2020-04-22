@@ -118,7 +118,7 @@ class UserInterface(Frame):
         #loading everything
         Frame.__init__(self,master)
         self.master = master
-        master.title('Reddit Scraper')
+        master.title('Subreddit Scraper')
         master.configure(background='#121212')
         self.configure(background='#121212')
         self.inputs()
@@ -127,8 +127,16 @@ class UserInterface(Frame):
         img = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperbutton.png")
         img = img.subsample(1,1)
         self.scrape_button = Button(self, text='Initiate Scrape', font=('Montserrat',9), fg='#BB86FC', command=self.scrape, image=img, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
-        self.scrape_button.grid(row=3, column=1, sticky='S')
+        self.scrape_button.grid(row=4, column=2, sticky='S')
         self.scrape_button.image = img
+
+        #Spacing labels
+        self.space_lbl = Label(self, text='1', font=('Monsterrat',1), fg='#121212', bg='#121212')
+        self.space_lbl.grid(row=1, column=0)
+
+        #Title label
+        self.title_lbl = Label(self, text='Subreddit Scraper', font=('Monsterrat',18,'bold'), fg='#BB86FC', bg='#121212')
+        self.title_lbl.grid(row=0, column=1, columnspan=2)
 
         #setting up grid
         self.grid()
@@ -144,12 +152,12 @@ class UserInterface(Frame):
         entryback_sub = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperentryback.png")
         entryback_sub = entryback_sub.subsample(1,1)
         self.entryback_sub = Label(self, image=entryback_sub, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
-        self.entryback_sub.grid(row=0, column=1)
+        self.entryback_sub.grid(row=1, column=2)
         self.entryback_sub.image = entryback_sub
         self.sub_entry = Entry(self, width=12, font=('Montserrat',10,'bold'), borderwidth=0, highlightthickness=0)
-        self.sub_entry.grid(row=0, column=1)
+        self.sub_entry.grid(row=1, column=2)
         self.sub_lbl = Label(self, text='Subreddit:', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
-        self.sub_lbl.grid(row=0)
+        self.sub_lbl.grid(row=1,column=1)
 
         #Sort method
         sort_dict = {'Top', 'New', 'Hot'}
@@ -157,20 +165,20 @@ class UserInterface(Frame):
         self.tkvar.set('Sort Method')
         self.sort_menu = OptionMenu(self, self.tkvar, *sort_dict)
         self.sort_menu.configure(borderwidth=0, highlightthickness=0,font=('Monsterrat',10,'bold'), bg='#121212', fg='#BB86FC')
-        self.sort_menu.grid(row=1, column=1)
+        self.sort_menu.grid(row=2, column=2)
         self.sort_lbl = Label(self, text='Sort By: ', font=('Montserrat',10,'bold'), bg='#121212', fg='white',)
-        self.sort_lbl.grid(row=1)
+        self.sort_lbl.grid(row=2, column=1)
 
         #Post number limit
         entryback_lim = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperentryback.png")
         entryback_lim = entryback_lim.subsample(1,1)
         self.entryback_lim = Label(self, image=entryback_lim, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
-        self.entryback_lim.grid(row=2, column=1)
+        self.entryback_lim.grid(row=3, column=2)
         self.entryback_lim.image = entryback_lim
         self.lim_entry = Entry(self, width=12, font=('Monsterrat',10,'bold'), borderwidth=0, highlightthickness=0)
-        self.lim_entry.grid(row=2, column=1)
+        self.lim_entry.grid(row=3, column=2)
         self.lim_lbl = Label(self, text='Download Limit (Max 1000): ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
-        self.lim_lbl.grid(row=2)
+        self.lim_lbl.grid(row=3,column=1)
 
     #This calls the scraper and checks for existing subreddit and that entries are filled out
     def scrape(self):
@@ -199,12 +207,12 @@ class UserInterface(Frame):
     #This sets up the progress updates and error messaging in the GUI
     def updates(self,message):
         self.update_lbl = Label(self, text=message, font=('Montserrat',10,'bold'), bg='#121212', fg='#CF6679')
-        self.update_lbl.grid(row=3, column=0, sticky='S')
+        self.update_lbl.grid(row=4, column=1, sticky='S')
         self.update()
 
 #Calling up the UI if this file is being called directly
 if __name__ == '__main__':
     root = Tk()
-    root.geometry('400x300')
+    root.geometry('500x400')
     ui = UserInterface(root)
     root.mainloop()
