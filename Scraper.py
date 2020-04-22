@@ -133,6 +133,8 @@ class UserInterface(Frame):
         #Spacing labels
         self.space_lbl = Label(self, text='1', font=('Monsterrat',1), fg='#121212', bg='#121212')
         self.space_lbl.grid(row=1, column=0)
+        self.space_lbl_two = Label(self, text='1', font=('Monsterrat',1), fg='#121212', bg='#121212')
+        self.space_lbl_two.grid(row=5, column=3)
 
         #Title label
         self.title_lbl = Label(self, text='Subreddit Scraper', font=('Monsterrat',18,'bold'), fg='#BB86FC', bg='#121212')
@@ -163,10 +165,14 @@ class UserInterface(Frame):
         sort_dict = {'Top', 'New', 'Hot'}
         self.tkvar = StringVar(root)
         self.tkvar.set('Sort Method')
+        sort_arrow = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperdown.png")
+        sort_arrow = sort_arrow.subsample(2,2)
         self.sort_menu = OptionMenu(self, self.tkvar, *sort_dict)
-        self.sort_menu.configure(borderwidth=0, highlightthickness=0,font=('Monsterrat',10,'bold'), bg='#121212', fg='#BB86FC')
+        self.sort_menu.configure(indicatoron=0,borderwidth=0, highlightthickness=0,font=('Monsterrat',10,'bold'), bg='#121212', activebackground='#121212', activeforeground='#BB86FC', fg='#BB86FC', image=sort_arrow, compound='right')
+        self.sort_menu.image=sort_arrow
+        self.sort_menu['menu'].config(borderwidth=0, font=('Monsterrat',10,'bold'), bg='#121212', fg='#BB86FC')
         self.sort_menu.grid(row=2, column=2)
-        self.sort_lbl = Label(self, text='Sort By: ', font=('Montserrat',10,'bold'), bg='#121212', fg='white',)
+        self.sort_lbl = Label(self, text='Sort By: ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
         self.sort_lbl.grid(row=2, column=1)
 
         #Post number limit
