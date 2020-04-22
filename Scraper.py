@@ -178,20 +178,20 @@ class UserInterface(Frame):
         try:
             limit_in = int(self.lim_entry.get())
         except ValueError:
-            self.updates('Please enter a limit.')
+            ui.updates('Please enter a limit.')
         if sub_in == '':
-            self.updates('Please enter a subreddit.')
+            ui.updates('Please enter a subreddit.')
         elif limit_in == 0:
-            self.updates('Please enter a limit.')
+            ui.updates('Please enter a limit.')
         else:
             if limit_in <= 1000:
                 try:
                     #Scraper is called
                     SubredditScraper(sub=sub_in,lim=limit_in,mode='w+',sort=sort_in).get_posts()
                 except prawcore.exceptions.Redirect:
-                    self.updates(f'Please check that {sub_in} is an existing subreddit.')
+                    ui.updates(f'Please check that {sub_in} is an existing subreddit.')
             else:
-                self.updates('Error post download limit is 1000')
+                ui.updates('Error post download limit is 1000')
 
     #This sets up the progress updates and error messaging in the GUI
     def updates(self,message):
