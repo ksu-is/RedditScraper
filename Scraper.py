@@ -36,7 +36,7 @@ class SubredditScraper:
             return self.sort, reddit.subreddit(self.sub).hot(limit=self.lim)
         else:
             self.sort = 'hot'
-            ui.updates('Sort method was not recognized, defaulting to hot.')
+            print('Sort method was not recognized, defaulting to hot.')
             return self.sort, reddit.subreddit(self.sub).hot(limit=self.lim)
     
     #This is the image downloader
@@ -152,12 +152,13 @@ class UserInterface(Frame):
         self.sub_lbl.grid(row=0)
 
         #Sort method
-        sort_dict = {'top', 'new', 'hot'}
+        sort_dict = {'Top', 'New', 'Hot'}
         self.tkvar = StringVar(root)
-        self.tkvar.set('top')
+        self.tkvar.set('Sort Method')
         self.sort_menu = OptionMenu(self, self.tkvar, *sort_dict)
+        self.sort_menu.configure(borderwidth=0, highlightthickness=0,font=('Monsterrat',10,'bold'), bg='#121212', fg='#BB86FC')
         self.sort_menu.grid(row=1, column=1)
-        self.sort_lbl = Label(self, text='Sort By: ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
+        self.sort_lbl = Label(self, text='Sort By: ', font=('Montserrat',10,'bold'), bg='#121212', fg='white',)
         self.sort_lbl.grid(row=1)
 
         #Post number limit
@@ -174,13 +175,15 @@ class UserInterface(Frame):
     #This calls the scraper and checks for existing subreddit and that entries are filled out
     def scrape(self):
         sub_in = self.sub_entry.get()
-        sort_in = self.tkvar.get()
+        sort_in = self.tkvar.get().lower()
         try:
             limit_in = int(self.lim_entry.get())
         except ValueError:
             ui.updates('Please enter a limit.')
         if sub_in == '':
             ui.updates('Please enter a subreddit.')
+        elif sort_in == 'sort method':
+            ui.updates('Please select a sort method.')
         elif limit_in == 0:
             ui.updates('Please enter a limit.')
         else:
