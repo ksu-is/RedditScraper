@@ -120,15 +120,13 @@ class UserInterface(Frame):
         self.master = master
         master.title('Reddit Scraper')
         master.configure(background='#121212')
-        master.attributes('-alpha',0.9)
         self.configure(background='#121212')
         self.inputs()
 
         #Scraper button
         img = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperbutton.png")
         img = img.subsample(1,1)
-        #img = img.subsample(5,5)
-        self.scrape_button = Button(self, text='Initiate Scrape', font=('Montserrat',9), fg='#BB86FC', command=self.scrape, image = img, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
+        self.scrape_button = Button(self, text='Initiate Scrape', font=('Montserrat',9), fg='#BB86FC', command=self.scrape, image=img, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
         self.scrape_button.grid(row=3, column=1, sticky='S')
         self.scrape_button.image = img
 
@@ -143,9 +141,14 @@ class UserInterface(Frame):
     #This sets up all the widgets for user input
     def inputs(self):
         #Subreddit entry
-        self.sub_entry = Entry(self, width=12, font=('Montserrat',10))
+        entryback_sub = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperentryback.png")
+        entryback_sub = entryback_sub.subsample(1,1)
+        self.entryback_sub = Label(self, image=entryback_sub, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
+        self.entryback_sub.grid(row=0, column=1)
+        self.entryback_sub.image = entryback_sub
+        self.sub_entry = Entry(self, width=12, font=('Montserrat',10,'bold'), borderwidth=0, highlightthickness=0)
         self.sub_entry.grid(row=0, column=1)
-        self.sub_lbl = Label(self, text='Enter the desired Subreddit:', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
+        self.sub_lbl = Label(self, text='Subreddit:', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
         self.sub_lbl.grid(row=0)
 
         #Sort method
@@ -154,13 +157,18 @@ class UserInterface(Frame):
         self.tkvar.set('top')
         self.sort_menu = OptionMenu(self, self.tkvar, *sort_dict)
         self.sort_menu.grid(row=1, column=1)
-        self.sort_lbl = Label(self, text='Select the sorting method: ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
+        self.sort_lbl = Label(self, text='Sort By: ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
         self.sort_lbl.grid(row=1)
 
         #Post number limit
-        self.lim_entry = Entry(self, width=8, font=('Arial',10))
+        entryback_lim = PhotoImage(file = r"C:\Users\Vex\Documents\GitHub\RedditScraper\resources\scraperentryback.png")
+        entryback_lim = entryback_lim.subsample(1,1)
+        self.entryback_lim = Label(self, image=entryback_lim, compound = CENTER, borderwidth=0, highlightthickness=0, padx=0, pady=0)
+        self.entryback_lim.grid(row=2, column=1)
+        self.entryback_lim.image = entryback_lim
+        self.lim_entry = Entry(self, width=12, font=('Monsterrat',10,'bold'), borderwidth=0, highlightthickness=0)
         self.lim_entry.grid(row=2, column=1)
-        self.lim_lbl = Label(self, text='Enter the amount of posts to download (Max 1000): ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
+        self.lim_lbl = Label(self, text='Download Limit (Max 1000): ', font=('Montserrat',10,'bold'), bg='#121212', fg='white')
         self.lim_lbl.grid(row=2)
 
     #This calls the scraper and checks for existing subreddit and that entries are filled out
@@ -194,6 +202,6 @@ class UserInterface(Frame):
 #Calling up the UI if this file is being called directly
 if __name__ == '__main__':
     root = Tk()
-    root.geometry('500x300')
+    root.geometry('400x300')
     ui = UserInterface(root)
     root.mainloop()
