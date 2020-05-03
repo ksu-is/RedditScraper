@@ -42,7 +42,7 @@ class SubredditScraper:
     #This is the image downloader
     def get_image(self,link):
         #testing the link to ensure it points to a graphic
-        print("Link is:",link)
+        #print("Link is:",link)
         image_dir = 'reddit_images/'
         cwd = os.getcwd()
         directory = cwd + "/" + image_dir
@@ -87,6 +87,7 @@ class SubredditScraper:
         for post in subreddit:
             unique_id = post.id not in tuple(df.id) if csv_loaded else True
 
+            #Adds scraped data to the dictonary and converts created date into readable format
             if unique_id:
                 sub_dict['selftext'].append(post.selftext)
                 sub_dict['title'].append(post.title)
